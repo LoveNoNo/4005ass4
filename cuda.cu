@@ -131,7 +131,7 @@ void master() {
     //int n_block_resolution = resolution * resolution / block_size + 1;
 
     initialize<<<n_block_size, block_size>>>(data_odd);
-    generate_fire_area<<<1, 1>>>(fire_area);
+    generate_fire_area<<<1, 1>>>(fire_area, size);
 
     // initialize<<<1, n_thd>>>(data_odd);
     // generate_fire_area<<<1, n_thd>>>(fire_area, size);
