@@ -28,7 +28,7 @@ __global__ void initialize(float *data) {
 }
 
 
-__global__ void generate_fire_area(bool *fire_area){
+__global__ void generate_fire_area(bool *fire_area, int size){
     // TODO: generate the fire area (in parallelized way)
     
     int len = size * size;
@@ -134,7 +134,7 @@ void master() {
     generate_fire_area<<<1, 1>>>(fire_area);
 
     // initialize<<<1, n_thd>>>(data_odd);
-    // generate_fire_area<<<1, n_thd>>>(fire_area);
+    // generate_fire_area<<<1, n_thd>>>(fire_area, size);
     
     int count = 1;
     double total_time = 0;
