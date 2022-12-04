@@ -58,7 +58,7 @@ __global__ void generate_fire_area(bool *fire_area){
 }
 
 
-__global__ void update(float *data, float *new_data) {
+__global__ void update(float *data, float *new_data, int size) {
     // TODO: update temperature for each point  (in parallelized way)
     
     int i = blockDim.x * blockIdx.x + threadIdx.x;
@@ -74,7 +74,7 @@ __global__ void update(float *data, float *new_data) {
 }
 
 
-__global__ void maintain_wall(float *data) {
+__global__ void maintain_wall(float *data, int size) {
     // TODO: maintain the temperature of the wall (sequential is enough)
 
     for(int i=0; i<size; i++){
@@ -145,13 +145,13 @@ void master() {
         // TODO: modify the following lines to fit your need.
         
         if (count % 2 == 1) {
-            update<<<n_block_size, block_size>>>(data_odd, data_even);
+            update<<<n_block_size, block_size>>>(data_odd, data_even, size);
             maintain_fire<<<n_block_size, block_size>>>(data_even, fire_area);
-            maintain_wall<<<1, 1>>>(data_even);
+            maintain_wall<<<1, 1>>>(data_even, size);
         } else {
-            update<<<n_block_size, block_size>>>(data_even, data_odd);
+            update<<<n_block_size, block_size>>>(data_even, data_odd, size);
             maintain_fire<<<n_block_size, block_size>>>(data_odd, fire_area);
-            maintain_wall<<<1, 1>>>(data_odd);
+            maintain_wall<<<1, 1>>>(data_odd, size);
         }
 
         /* One block setting thread
