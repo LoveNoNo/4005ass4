@@ -61,10 +61,11 @@ void generate_fire_area(bool *fire_area){
 
 void update(float *data, float *new_data) {
     // TODO: update the temperature of each point, and store the result in `new_data` to avoid data racing
-    
+    int j;
+	
     #pragma omp parallel for private(j) firstprivate(data) lastprivate(new_data)
     for (int i = 1; i < size - 1; i++){ 
-        for (int j = 1; j < size - 1; j++){  
+        for (j = 1; j < size - 1; j++){  
             int idx = i * size + j;
             float up = data[idx - size];
             float down = data[idx + size];
