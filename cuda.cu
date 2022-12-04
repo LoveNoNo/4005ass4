@@ -4,7 +4,7 @@
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
-// #include <chrono>
+#include <chrono>
 
 #ifdef GUI
 #include <GL/glut.h>
@@ -128,7 +128,7 @@ void master() {
     #endif
 
     int n_block_size = size * size / block_size + 1;
-    int n_block_resolution = resolution * resolution / block_size + 1;
+    //int n_block_resolution = resolution * resolution / block_size + 1;
 
     initialize<<<n_block_size, block_size>>>(data_odd);
     generate_fire_area<<<1, 1>>>(fire_area);
